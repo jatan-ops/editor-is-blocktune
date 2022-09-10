@@ -5,34 +5,50 @@ import { createReactEditorJS } from 'react-editor-js';
 
 import Header from '@editorjs/header';
 import Paragraph from '@editorjs/paragraph';
-
+import editorjsColumns from '@calumk/editorjs-columns'
 import AlignmentTuneTool from 'editorjs-text-alignment-blocktune';
+import CustomColumns from './CustomColumns'
 
 const ReactEditorJS = createReactEditorJS();
 
-class ReactEditor extends Component {
-  render() {
-    return (
+const ReactEditor = () => {
+
+  let column_tools = {
+    header: Header,
+    paragraph : Paragraph,
+  }
+
+  return (
+    <div style={{width:'80%', marginLeft:'10%'}}>
       <ReactEditorJS
         tools={{
+          columns: {
+            class: CustomColumns
+          },
           paragraph: {
             class: Paragraph,
-            tunes: ['anyTuneName']
+            // tunes: ['anyTuneName']
           },
           header: {
             class: Header,
-            tunes: ['anyTuneName']
+            // tunes: ['anyTuneName']
             // mention block tune name in all block types
           },
-          anyTuneName: {
-            class: AlignmentTuneTool,
-            config: {
-              default: 'right',
-              blocks: {
-                header: 'left'
-              }
-            }
-          }
+          // columns : {
+          //   class : editorjsColumns,
+          //   config : {
+          //     tools : column_tools, // IMPORTANT! ref the column_tools
+          //   }
+          // },
+          // anyTuneName: {
+          //   class: AlignmentTuneTool,
+          //   config: {
+          //     default: 'right',
+          //     blocks: {
+          //       header: 'left'
+          //     }
+          //   }
+          // }
         }}
         defaultValue={{
           time: 1635603431943,
@@ -128,8 +144,8 @@ class ReactEditor extends Component {
           ]
         }}
       />
-    );
-  }
+    </div>
+  );
 }
 
 ReactDOM.render(<ReactEditor />, document.getElementById('app'));
